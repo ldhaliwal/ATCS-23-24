@@ -49,6 +49,11 @@ class Game:
 
         for item in collided_items:
             item.update("caught")
+            self.score += 1
+        
+        ##if self.score >= 5:
+            ##for item in self.items:
+                ##item.update("run away")
 
     # Draws the game
     def render(self):
@@ -56,7 +61,8 @@ class Game:
         pygame.draw.rect(self.screen, (0, 255, 0), self.player.rect)
 
         for item in self.items:
-            pygame.draw.rect(self.screen, (255, 0, 0), item.rect)
+            if item.visible == True:
+                pygame.draw.rect(self.screen, (255, 0, 0), item.rect)
 
         pygame.display.flip()
         self.clock.tick(30)

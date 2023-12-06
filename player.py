@@ -8,7 +8,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Intializes the player
-        self.image = pygame.Surface((50, 50))
+        self.image = pygame.Surface((50, 75))
         self.image.fill((0, 255, 0))
         self.rect = self.image.get_rect()
         self.rect.x = screen_width // 2
@@ -24,9 +24,9 @@ class Player(pygame.sprite.Sprite):
     def update(self, keys):
         if keys[pygame.K_LEFT] and (self.rect.x - self.speed) > 0:
             self.rect.x -= self.speed
-        if keys[pygame.K_RIGHT] and (self.rect.x + self.speed) < self.screen_width:
+        if keys[pygame.K_RIGHT] and (self.rect.x + self.speed + 50) < self.screen_width:
             self.rect.x += self.speed
         if keys[pygame.K_UP] and (self.rect.y - self.speed) > 0:
             self.rect.y -= self.speed
-        if keys[pygame.K_DOWN] and (self.rect.y + self.speed) < self.screen_height:
+        if keys[pygame.K_DOWN] and (self.rect.y + self.speed + 75) < self.screen_height:
             self.rect.y += self.speed

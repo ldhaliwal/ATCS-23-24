@@ -10,6 +10,8 @@ class Item(pygame.sprite.Sprite):
     CAUGHT = "c"
     RUN_AWAY = "r_a"
 
+    MAX_SPEED = 4
+
     def __init__(self, screen_width, screen_height):
         super().__init__()
 
@@ -20,6 +22,11 @@ class Item(pygame.sprite.Sprite):
         self.rect.x = random.randint(0, screen_width - 30)
         self.rect.y = random.randint(0, screen_height - 30)
 
+        self.x_change = self.MAX_SPEED - random.randint(0, 2 * self.MAX_SPEED)
+        self.y_change = self.MAX_SPEED - random.randint(0, 2 * self.MAX_SPEED) 
+
+        self.visible = True
+
         self.speed = 3
         self.direction = random.choice([-1, 1])  
 
@@ -28,7 +35,7 @@ class Item(pygame.sprite.Sprite):
 
     # Code writen by Liliana Dhaliwal
     def init_fsm(self):
-        self.fsm.add_transition("caught", self.MOVE_RANDOMLY, None, self.CAUGHT)
+        self.fsm.add_transition("caught", self.MOVE_RANDOMLY, self.caught, self.CAUGHT)
         self.fsm.add_transition(None, self.MOVE_RANDOMLY, self.move_randomly, self.MOVE_RANDOMLY)
         # self.fsm.add_transition('??', self.MOVE_RANDOMLY, None, self.RUN_AWAY)
         # self.fsm.add_transition('??', self.RUN_AWAY, None, self.CAUGHT)
@@ -42,20 +49,31 @@ class Item(pygame.sprite.Sprite):
         if self.get_state() != "c":
             self.fsm.process(input)
 
-    # Code edited by Liliana Dhaliwal
+    def caught(self):
+        self.visible = False
+
+    # Code written by Liliana Dhaliwal
     def move_randomly(self):
-        #self.direction = random.choice([-1, 1]) 
+        # Creates a 1-in-7 probability that the direction is changed.
+        if random.randint(0, 6) == 1:
+            self.x_change += random.randint(-self.MAX_SPEED, self.MAX_SPEED)
 
-        # Moves the item horizontally
-        self.rect.x += self.speed * self.direction
+            self.x_change = min(self.x_change, self.MAX_SPEED)
+            self.x_change = max(self.x_change, -self.MAX_SPEED)
+            
+            self.y_change += random.randint(-self.MAX_SPEED, self.MAX_SPEED)
 
-        # Changes the item's direction if it hits the window boundaries
-        if self.rect.x <= 0 or self.rect.x >= 800 - 30:
-            self.direction *= -1
+            self.y_change = min(self.y_change, self.MAX_SPEED)
+            self.y_change = max(self.y_change, -self.MAX_SPEED)
 
-        # Moves the item vertically
-        self.rect.y += self.speed * self.direction
+        self.rect.x += self.x_change
+        self.rect.y += self.y_change
 
-        # Changes the item's direction if it hits the window boundaries
-        if self.rect.y <= 0 or self.rect.y >= 600 - 30:
-            self.direction *= -1
+        if (self.rect.x <= 0 and self.x_change < 0) or (self.rect.x  >= 800 - 30):
+            self.x_change = -self.x_change
+
+        if (self.rect.y <= 0 and self.y_change < 0) or (self.rect.y >= 600 - 30):
+            self.y_change = -self.y_change
+
+    def run_away(self):
+        pass
