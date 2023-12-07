@@ -58,7 +58,8 @@ class Game:
     # Draws the game
     def render(self):
         self.screen.fill((255, 255, 255))
-        pygame.draw.rect(self.screen, (0, 255, 0), self.player.rect)
+        
+        self.screen.blit(self.player.image, self.player.rect)
 
         for item in self.items:
             if item.visible == True:

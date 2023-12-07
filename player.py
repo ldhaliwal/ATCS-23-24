@@ -8,8 +8,8 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         # Intializes the player
-        self.image = pygame.Surface((50, 75))
-        self.image.fill((0, 255, 0))
+        self.image = pygame.image.load("Assets/player.png")
+        #self.image.fill((0, 255, 0))
         self.rect = self.image.get_rect()
         self.rect.x = screen_width // 2
         self.rect.y = screen_height // 2
