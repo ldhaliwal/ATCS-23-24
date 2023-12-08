@@ -21,10 +21,10 @@ class Game:
         self.player = Player(self.screen_width, self.screen_height)
         self.items = pygame.sprite.Group()
 
-        for i in range(10):
-            self.items.add(Item(self.screen_width, self.screen_height))
-
         self.score = 0
+
+        for i in range(10):
+            self.items.add(Item(self, self.player, self.screen_width, self.screen_height))
 
     def run(self):
         while self.running:
@@ -49,11 +49,6 @@ class Game:
 
         for item in collided_items:
             item.update("caught")
-            self.score += 1
-        
-        ##if self.score >= 5:
-            ##for item in self.items:
-                ##item.update("run away")
 
     # Draws the game
     def render(self):
