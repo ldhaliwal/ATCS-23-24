@@ -1,5 +1,5 @@
 """
-@author: Ms. Namasivayam, Liliana Dhaliwal
+@authors: Ms. Namasivayam, Liliana Dhaliwal
 """
 
 class FSM:

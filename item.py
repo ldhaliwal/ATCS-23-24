@@ -69,7 +69,7 @@ class Item(pygame.sprite.Sprite):
     # Code written by Liliana Dhaliwal
     # Changes the item's x and y coordinates to move randomly 
     def move_randomly(self):
-        # Creates a 1-in-7 probability that the direction is changed.
+        # Creates a 1 in 7 chance that the direction is changed
         if random.randint(0, 6) == 1:
             self.x_change += random.randint(-self.MAX_SPEED, self.MAX_SPEED)
 
